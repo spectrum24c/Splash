@@ -1,0 +1,182 @@
+<!-- HTML -->
+<div id="splash-screen" class="splash-container">
+  <h1 class="splash-title">
+    <span class="letter">H</span>
+    <span class="letter">Y</span>
+    <span class="letter">P</span>
+    <span class="letter">E</span>
+    <span class="letter">S</span>
+    <span class="letter">T</span>
+    <span class="letter">R</span>
+    <span class="letter">E</span>
+    <span class="letter">A</span>
+    <span class="letter">M</span>
+  </h1>
+  <p class="splash-subtitle">Welcome to our app</p>
+  <p class="splash-version">v1.0.0</p>
+  <div class="splash-loader"></div>
+</div>
+
+<!-- CSS -->
+<style>
+.splash-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #141414; /* Netflix-like dark background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.splash-title {
+  font-size: 48px; /* Larger for impact */
+  font-weight: 900; /* Bold for Netflix-like style */
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  text-align: center;
+  padding: 0 20px;
+  display: flex;
+  opacity: 0; /* Start hidden for animation */
+  animation: titleFadeIn 1s ease-out 0.5s forwards; /* Fade in after slight delay */
+}
+
+.splash-title .letter {
+  display: inline-block;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: letterReveal 0.5s ease-out forwards;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow like Netflix */
+}
+
+/* Letter-by-letter animation with staggered delays */
+.splash-title .letter:nth-child(1) { animation-delay: 0.1s; }
+.splash-title .letter:nth-child(2) { animation-delay: 0.15s; }
+.splash-title .letter:nth-child(3) { animation-delay: 0.2s; }
+.splash-title .letter:nth-child(4) { animation-delay: 0.25s; }
+.splash-title .letter:nth-child(5) { animation-delay: 0.3s; }
+.splash-title .letter:nth-child(6) { animation-delay: 0.35s; }
+.splash-title .letter:nth-child(7) { animation-delay: 0.4s; }
+.splash-title .letter:nth-child(8) { animation-delay: 0.45s; }
+.splash-title .letter:nth-child(9) { animation-delay: 0.5s; }
+.splash-title .letter:nth-child(10) { animation-delay: 0.55s; }
+
+/* Pulse effect after letters appear */
+@keyframes letterReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2); /* Slight overscale for drama */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes titleFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.splash-subtitle {
+  font-size: 14px;
+  color: #e0e0e0;
+  margin: 0 0 20px 0;
+  text-align: center;
+  padding: 0 20px;
+  opacity: 0;
+  animation: subtitleFadeIn 1s ease-out 1.5s forwards; /* Delayed appearance */
+}
+
+.splash-version {
+  font-size: 12px;
+  color: #e0e0e0;
+  margin: 0 0 20px 0;
+  opacity: 0;
+  animation: subtitleFadeIn 1s ease-out 1.7s forwards; /* Slightly later than subtitle */
+}
+
+.splash-loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #ffffff;
+  border-radius: 50%;
+  animation: splash-spin 1s linear infinite;
+  opacity: 0;
+  animation: subtitleFadeIn 1s ease-out 2s forwards, splash-spin 1s linear infinite; /* Loader appears last */
+}
+
+@keyframes subtitleFadeIn {
+  to {
+    opacity: 0.7;
+  }
+}
+
+@keyframes splash-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Fade out entire splash screen */
+.splash-container.fade-out {
+  animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .splash-title {
+    font-size: 32px; /* Smaller for mobile */
+  }
+  
+  .splash-subtitle {
+    font-size: 12px;
+  }
+  
+  .splash-loader {
+    width: 32px;
+    height: 32px;
+  }
+}
+</style>
+
+<!-- JavaScript -->
+<script>
+// Splash screen management
+document.addEventListener('DOMContentLoaded', function() {
+  const splashScreen = document.getElementById('splash-screen');
+  
+  // Hide splash screen after animations complete
+  function hideSplashScreen() {
+    if (splashScreen) {
+      splashScreen.classList.add('fade-out');
+      setTimeout(() => {
+        splashScreen.style.display = 'none';
+      }, 500); // Match fade-out duration
+    }
+  }
+  
+  // Auto-hide after 4 seconds to allow animations to complete
+  setTimeout(hideSplashScreen, 4000);
+  
+  // Optional: Call hideSplashScreen when app is fully loaded
+  // window.addEventListener('load', hideSplashScreen);
+});
+</script>
